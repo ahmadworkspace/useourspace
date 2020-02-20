@@ -112,7 +112,7 @@ export { default as UserNav } from './UserNav/UserNav';
 
 ////////////////////////////////////////////////
 // These components include other components //
-////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 export { default as ActivityFeed } from './ActivityFeed/ActivityFeed';
 export { default as AddImages } from './AddImages/AddImages';
