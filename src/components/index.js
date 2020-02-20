@@ -110,7 +110,7 @@ export { LinkTabNavHorizontal, ButtonTabNavHorizontal } from './TabNavHorizontal
 export { default as Tabs } from './Tabs/Tabs';
 export { default as UserNav } from './UserNav/UserNav';
 
-///////////////////////////////////////////////
+////////////////////////////////////////////////
 // These components include other components //
 ///////////////////////////////////////////////
 
