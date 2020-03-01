@@ -18,7 +18,6 @@ export const amenitiesSoccerField = [
   },
 
 ];
-
 export const amenitiesTennisCourt = [
   {
     key: 'fully_fenced',
@@ -32,19 +31,8 @@ export const amenitiesTennisCourt = [
     key: 'marked_Lines',
     label: 'Marked Lines',
   },
-
-
 ];
-
-
-
-
-
-
-
-
-
-export const amenitiesCommercialKitchen = [
+export const amenities = [
   {
     key: 'refrigeration_capacity',
     label: 'Refrigeration Capacity',
@@ -72,10 +60,6 @@ export const amenitiesCommercialKitchen = [
   {
     key: 'silverware',
     label: 'Silverware',
-  },
-  {
-    key: 'sq_footage',
-    label: 'Sq footage',
   },
   {
     key: 'cook_pots',
@@ -138,15 +122,7 @@ export const amenitiesCommercialKitchen = [
     label: 'Restroom Available',
   },
 ];
-
-
-
-
-
-
-
-
-export const amenities = [
+export const amenities1 = [
   {
     key: 'towels',
     label: 'Towels',
@@ -182,14 +158,15 @@ export const amenities = [
 ];
 
 export const categories = [
+  { key: 'soccer_field', label: 'Soccer Field' },
+  { key: 'tennis_court', label: 'Tennis Court' },
+  { key: 'commercial_kitchens', label: 'Commercial Kitchens' },
   { key: 'apartments', label: 'Apartments' },
   { key: 'arenasand_stadiums', label: 'Arenas and Stadiums' },
   { key: 'agriculture_land', label: 'Agriculture Land' },
   { key: 'big_venues', label: 'Big Venues' },
   { key: 'camps_and_lodges', label: 'Camps And Lodges' },
   { key: 'conference_rooms_and_classes', label: 'Conference Rooms and Classes' },
-  { key: 'commercial_kitchens', label: 'Commercial Kitchens' },
-  { key: 'soccer_field', label: 'Soccer Field' },
   { key: 'church2church', label: 'Church 2 church' },
 ];
 
