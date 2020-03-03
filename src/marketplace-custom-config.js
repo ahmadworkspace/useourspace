@@ -6,7 +6,7 @@
 
 
 
-
+ 
 export const amenitiesSoccerField = [
   {
     key: 'goals_with_nets',
@@ -18,7 +18,7 @@ export const amenitiesSoccerField = [
   },
 
 ];
-export const amenitiesTennisCourt = [
+export const tennis_court = [
   {
     key: 'fully_fenced',
     label: 'Fully fenced',
