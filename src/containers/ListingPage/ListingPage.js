@@ -52,6 +52,7 @@ import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
+import {getAmenties} from "../../marketplace-custom-config";
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
@@ -474,6 +475,8 @@ export class ListingPageComponent extends Component {
   }
 }
 
+const amenties = localStorage.getItem('value');
+
 ListingPageComponent.defaultProps = {
   unitType: config.bookingUnitType,
   currentUser: null,
@@ -485,7 +488,7 @@ ListingPageComponent.defaultProps = {
   fetchTimeSlotsError: null,
   sendEnquiryError: null,
   categoriesConfig: config.custom.categories,
-  amenitiesConfig: config.custom.amenities,
+  amenitiesConfig: getAmenties(amenties),
 };
 
 ListingPageComponent.propTypes = {

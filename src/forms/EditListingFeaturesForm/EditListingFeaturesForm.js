@@ -11,6 +11,7 @@ import config from '../../config';
 import { Button, FieldCheckboxGroup, Form } from '../../components';
 
 import css from './EditListingFeaturesForm.css';
+import {getAmenties} from "../../marketplace-custom-config";
 
 const EditListingFeaturesFormComponent = props => (
   <FinalForm
@@ -36,7 +37,7 @@ const EditListingFeaturesFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = disabled || submitInProgress;
       const amenties = localStorage.getItem('value');
-      let ammenitiesvalue = "";
+      let ammenitiesvalue = getAmenties(amenties);
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
         <p className={css.error}>
@@ -52,151 +53,151 @@ const EditListingFeaturesFormComponent = props => (
 
 
 // Here are the conditions for specified category.
-// if you want to add new amenities for a specific category add new if condition before last else. 
+// if you want to add new amenities for a specific category add new if condition before last else.
 
-     if(amenties === 'tennis_court'){
-       ammenitiesvalue = [
-        {
-          key: 'fully_fenced',
-          label: 'Fully fenced',
-        },
-        {
-          key: 'net_included',
-          label: 'Net included',
-        },
-        {
-          key: 'marked_Lines',
-          label: 'Marked Lines',
-        },
-       ]
-     }
-   else  if(amenties === 'soccer_field') {
-       ammenitiesvalue = [
-      {
-        key: 'goals_with_nets',
-        label: 'Goals with nets',
-      },
-      {
-        key: 'marked_lines',
-        label: 'Marked lines',
-      },
-       ] 
-    }
-else if(amenties === 'commercial_kitchens'){
+//      if(amenties === 'tennis_court'){
+//        ammenitiesvalue = [
+//         {
+//           key: 'fully_fenced',
+//           label: 'Fully fenced',
+//         },
+//         {
+//           key: 'net_included',
+//           label: 'Net included',
+//         },
+//         {
+//           key: 'marked_Lines',
+//           label: 'Marked Lines',
+//         },
+//        ]
+//      }
+//    else  if(amenties === 'soccer_field') {
+//        ammenitiesvalue = [
+//       {
+//         key: 'goals_with_nets',
+//         label: 'Goals with nets',
+//       },
+//       {
+//         key: 'marked_lines',
+//         label: 'Marked lines',
+//       },
+//        ]
+//     }
+// else if(amenties === 'commercial_kitchens'){
+//
+//   ammenitiesvalue = [
+//     {
+//       key: 'refrigeration_capacity',
+//       label: 'Refrigeration Capacity',
+//     },
+//     {
+//       key: 'freezer_capacity',
+//       label: 'Freezer capacity',
+//     },
+//     {
+//       key: 'stove_tops',
+//       label: 'Stove tops',
+//     },
+//     {
+//       key: 'ovens',
+//       label: 'Ovens',
+//     },
+//     {
+//       key: 'plates',
+//       label: 'Plates',
+//     },
+//     {
+//       key: 'cups',
+//       label: 'Cups',
+//     },
+//     {
+//       key: 'silverware',
+//       label: 'Silverware',
+//     },
+//     {
+//       key: 'cook_pots',
+//       label: 'Cook pots',
+//     },
+//     {
+//       key: 'frying_pans',
+//       label: 'Frying pans',
+//     },
+//     {
+//       key: 'baking_sheets',
+//       label: 'Baking sheets',
+//     },
+//     {
+//       key: 'cooking_utensils',
+//       label: 'Cooking utensils',
+//     },
+//     {
+//       key: 'specialty_utensils',
+//       label: 'Specialty utensils',
+//     },
+//     {
+//       key: 'measuring_cups',
+//       label: 'Measuring cups',
+//     },
+//     {
+//       key: 'hot_pads',
+//       label: 'Hot pads',
+//     },
+//     {
+//       key: 'dishwasher',
+//       label: 'Dishwasher',
+//     },
+//     {
+//       key: 'triple_sink',
+//       label: 'Triple Sink',
+//     },
+//     {
+//       key: 'dish_towels',
+//       label: 'Dish towels',
+//     },
+//     {
+//       key: 'hand_wash_station',
+//       label: 'Hand wash station',
+//     },
+//     {
+//       key: 'first_aid_kit',
+//       label: 'First aid kit',
+//     },
+//     {
+//       key: 'griddle',
+//       label: 'Griddle',
+//     },
+//     {
+//       key: 'barbeque',
+//       label: 'Barbeque',
+//     },
+//     {
+//       key: 'restroom',
+//       label: 'Restroom Available',
+//     },
+// ]
+// }
+// else {
+//   ammenitiesvalue = [
+//     {
+//   key: 'not found',
+//   label:'No Amenities found for this category'
+//     }
+// ]
+// }
 
-  ammenitiesvalue = [
-    {
-      key: 'refrigeration_capacity',
-      label: 'Refrigeration Capacity',
-    },
-    {
-      key: 'freezer_capacity',
-      label: 'Freezer capacity',
-    },
-    {
-      key: 'stove_tops',
-      label: 'Stove tops',
-    },
-    {
-      key: 'ovens',
-      label: 'Ovens',
-    },
-    {
-      key: 'plates',
-      label: 'Plates',
-    },
-    {
-      key: 'cups',
-      label: 'Cups',
-    },
-    {
-      key: 'silverware',
-      label: 'Silverware',
-    },
-    {
-      key: 'cook_pots',
-      label: 'Cook pots',
-    },
-    {
-      key: 'frying_pans',
-      label: 'Frying pans',
-    },
-    {
-      key: 'baking_sheets',
-      label: 'Baking sheets',
-    },
-    {
-      key: 'cooking_utensils',
-      label: 'Cooking utensils',
-    },
-    {
-      key: 'specialty_utensils',
-      label: 'Specialty utensils',
-    },
-    {
-      key: 'measuring_cups',
-      label: 'Measuring cups',
-    },
-    {
-      key: 'hot_pads',
-      label: 'Hot pads',
-    },
-    {
-      key: 'dishwasher',
-      label: 'Dishwasher',
-    },
-    {
-      key: 'triple_sink',
-      label: 'Triple Sink',
-    },
-    {
-      key: 'dish_towels',
-      label: 'Dish towels',
-    },
-    {
-      key: 'hand_wash_station',
-      label: 'Hand wash station',
-    },
-    {
-      key: 'first_aid_kit',
-      label: 'First aid kit',
-    },
-    {
-      key: 'griddle',
-      label: 'Griddle',
-    },
-    {
-      key: 'barbeque',
-      label: 'Barbeque',
-    },
-    {
-      key: 'restroom',
-      label: 'Restroom Available',
-    },
-]
-}  
-else {
-  ammenitiesvalue = [
-    {
-  key: 'not found',
-  label:'No Amenities found for this category'
-    }  
-]
-}
 
-    
       return (
-        
+
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
-        
-      
+
+
           <FieldCheckboxGroup
             className={css.features}
             id={name}
             name={name}
-            
+
             options={ammenitiesvalue}
           />
 
