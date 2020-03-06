@@ -56,7 +56,7 @@ const EditListingFeaturesFormComponent = props => (
 // if you want to add new amenities for a specific category add new if condition before last else. 
 
      if(amenties === 'tennis_court'){
-       ammenitiesvalue = custom.DYN_EMENTIES.tennis_court
+       ammenitiesvalue = custom.DYN_EMENTIES.tennis_court  //Taking amenities array from marketplace-custom-config.js
      }
    else  if(amenties === 'soccer_field') {
     ammenitiesvalue = custom.DYN_EMENTIES.soccer_field
