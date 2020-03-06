@@ -11,7 +11,6 @@ import config from '../../config';
 import { Button, FieldCheckboxGroup, Form } from '../../components';
 
 import css from './EditListingFeaturesForm.css';
-import CustomAmenities from '../../CustomAmenities';
 
 const EditListingFeaturesFormComponent = props => (
   <FinalForm
