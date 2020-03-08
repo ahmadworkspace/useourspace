@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { arrayOf } from 'prop-types';
+import { propTypes } from '../../util/types';
 import { intlShape } from '../../util/reactIntl';
 import routeConfiguration from '../../routeConfiguration';
 import {
@@ -21,6 +23,9 @@ import {
 } from '../../components';
 
 import css from './EditListingWizard.css';
+import {LISTING_CONFIGS} from "../../marketplace-custom-config";
+import {LINE_ITEM_UNITS} from "../../util/types";
+import EditListingAvailabilityPanelHourly from "../EditListingAvailabilityPanel/EditListingAvailabilityPanelHourly";
 
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
@@ -87,6 +92,8 @@ const EditListingWizardTab = props => {
     availability,
     listing,
     handleCreateFlowTabScrolling,
+      onAddAvailabilityException,
+      onDeleteAvailabilityException,
     handlePublishListing,
     onUpdateListing,
     onCreateListingDraft,
@@ -97,6 +104,8 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+      fetchExceptionsInProgress,
+      availabilityExceptions,
   } = props;
 
   const { type } = params;
@@ -248,7 +257,32 @@ const EditListingWizardTab = props => {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewAvailability'
         : 'EditListingWizard.saveEditAvailability';
-      return (
+
+        const selectedListing = localStorage.getItem('value');
+
+        if (LISTING_CONFIGS[selectedListing].unitType === LINE_ITEM_UNITS) {
+          return (
+              <EditListingAvailabilityPanelHourly
+                  {...panelProps(AVAILABILITY)}
+                  fetchExceptionsInProgress={fetchExceptionsInProgress}
+                  availabilityExceptions={availabilityExceptions}
+                  submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+                  onAddAvailabilityException={onAddAvailabilityException}
+                  onDeleteAvailabilityException={onDeleteAvailabilityException}
+                  onSubmit={values => {
+                      // We want to return the Promise to the form,
+                      // so that it doesn't close its modal if an error is thrown.
+                      return onCompleteEditListingWizardTab(tab, values, true);
+                  }}
+                  onNextTab={() =>
+                      redirectAfterDraftUpdate(listing.id.uuid, params, tab, marketplaceTabs, history)
+                  }
+              />
+          )
+        }
+
+
+            return (
         <EditListingAvailabilityPanel
           {...panelProps(AVAILABILITY)}
           availability={availability}
@@ -297,6 +331,7 @@ EditListingWizardTab.propTypes = {
     type: oneOf(LISTING_PAGE_PARAM_TYPES).isRequired,
     tab: oneOf(SUPPORTED_TABS).isRequired,
   }).isRequired,
+    availabilityExceptions: arrayOf(propTypes.availabilityException),
   errors: shape({
     createListingDraftError: object,
     publishListingError: object,
@@ -305,6 +340,7 @@ EditListingWizardTab.propTypes = {
     uploadImageError: object,
   }).isRequired,
   fetchInProgress: bool.isRequired,
+    fetchExceptionsInProgress: bool.isRequired,
   newListingPublished: bool.isRequired,
   history: shape({
     push: func.isRequired,
@@ -327,6 +363,8 @@ EditListingWizardTab.propTypes = {
 
   handleCreateFlowTabScrolling: func.isRequired,
   handlePublishListing: func.isRequired,
+    onAddAvailabilityException: func.isRequired,
+    onDeleteAvailabilityException: func.isRequired,
   onUpdateListing: func.isRequired,
   onCreateListingDraft: func.isRequired,
   onImageUpload: func.isRequired,

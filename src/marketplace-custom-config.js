@@ -2,8 +2,7 @@
  * Marketplace specific configuration.
  */
 
-
-
+import {LINE_ITEM_DAY, LINE_ITEM_NIGHT, LINE_ITEM_UNITS} from "./util/types";
 
 export const DYN_EMENTIES = {
     tennis_court: [
@@ -120,6 +119,18 @@ export const DYN_EMENTIES = {
             label: 'Restroom Available',
         },
     ]
+};
+
+export const LISTING_CONFIGS = {
+    tennis_court: {
+        unitType: LINE_ITEM_UNITS
+    },
+    soccer_field: {
+        unitType: LINE_ITEM_DAY
+    },
+    commercial_kitchens: {
+        unitType: LINE_ITEM_NIGHT
+    }
 };
 
 

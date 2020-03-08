@@ -196,7 +196,7 @@
   "EditListingPricingForm.priceInputPlaceholder": "Définir votre prix…",
   "EditListingPricingForm.pricePerDay": "Prix par jour en euros",
   "EditListingPricingForm.pricePerNight": "Prix par nuit en euros",
-  "EditListingPricingForm.pricePerUnit": "Prix par unité en euros",
+  "EditListingPricingForm.pricePerUnit": "Prix par heure en euros",
   "EditListingPricingForm.priceRequired": "Vous devez ajouter un prix.",
   "EditListingPricingForm.priceTooLow": "Le prix doit être d'au moins {minPrice}.",
   "EditListingPricingForm.showListingFailed": "Impossible de récupérer les informations de l'annonce",

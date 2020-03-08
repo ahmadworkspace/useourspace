@@ -1,10 +1,13 @@
-import moment from 'moment';
-
+// import moment from 'moment';
+import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range.min';
+import jstz from 'jstimezonedetect';
 /**
  * Input names for the DateRangePicker from react-dates.
  */
 export const START_DATE = 'startDate';
 export const END_DATE = 'endDate';
+
+
 
 /**
  * Check that the given parameter is a Date object.
@@ -228,6 +231,25 @@ export const stringifyDateToISO8601 = date => {
 };
 
 /**
+ * Check if date is after another date.
+ * @param {Date} date
+ * @param {Date} compareToDate
+ *
+ * @returns {boolean} is the date same or after
+ */
+export const dateIsAfter = (date, compareToDate) => {
+    return moment(date).isSameOrAfter(compareToDate);
+};
+
+export const findNextBoundary = (timeZone, currentMomentOrDate) =>
+    moment(currentMomentOrDate)
+        .clone()
+        .tz(timeZone)
+        .add(1, 'hour')
+        .startOf('hour')
+        .toDate();
+
+/**
  * Formats string ('YYYY-MM-DD') to UTC format ('0000-00-00T00:00:00.000Z').
  * This is used in search query.
  *
@@ -236,9 +258,152 @@ export const stringifyDateToISO8601 = date => {
  * @returns {String} string in '0000-00-00T00:00:00.000Z' format
  */
 
+/**
+ * Detect the default timezone of user's browser.
+ * This function can only be called from client side.
+ * I.e. server-side rendering doesn't make sense - it would not return user's timezone.
+ *
+ * @returns {String} string containing IANA timezone key (e.g. 'Europe/Helsinki')
+ */
+export const getDefaultTimeZoneOnBrowser = () => {
+    if (typeof window === 'undefined') {
+        throw new Error(
+            'Utility function: getDefaultTimeZoneOnBrowser() should be called on client-side only.'
+        );
+    }
+
+    if (isTimeZoneSupported()) {
+        const dtf = new Intl.DateTimeFormat();
+        const currentTimeZone = dtf.resolvedOptions().timeZone;
+        if (currentTimeZone) {
+            return currentTimeZone;
+        }
+    }
+
+    // Fallback to jstimezonedetect dependency.
+    // However, most browsers support Intl.DateTimeFormat already.
+    return jstz.determine().name();
+};
+
+export const getEndHours = (intl, timeZone, startTime, endTime) => {
+    const hours = getSharpHours(intl, timeZone, startTime, endTime);
+    return hours.length < 2 ? [] : hours.slice(1);
+};
+
+export const getMonthStartInTimeZone = (date, timeZone) => {
+    return timeZone
+        ? moment(date)
+            .tz(timeZone)
+            .startOf('month')
+            .toDate()
+        : moment(date)
+            .startOf('month')
+            .toDate();
+};
+
+export const getSharpHours = (intl, timeZone, startTime, endTime) => {
+    if (!moment.tz.zone(timeZone)) {
+        throw new Error(
+            'Time zones are not loaded into moment-timezone. "getSharpHours" function uses time zones.'
+        );
+    }
+
+    // Select a moment before startTime to find next possible sharp hour.
+    // I.e. startTime might be a sharp hour.
+    const millisecondBeforeStartTime = new Date(startTime.getTime() - 1);
+    return findBookingUnitBoundaries({
+        currentBoundary: findNextBoundary(timeZone, millisecondBeforeStartTime),
+        startMoment: moment(startTime),
+        endMoment: moment(endTime),
+        nextBoundaryFn: findNextBoundary,
+        cumulatedResults: [],
+        intl,
+        timeZone,
+    });
+};
+
+const findBookingUnitBoundaries = params => {
+    const {
+        cumulatedResults,
+        currentBoundary,
+        startMoment,
+        endMoment,
+        nextBoundaryFn,
+        intl,
+        timeZone,
+    } = params;
+
+    if (moment(currentBoundary).isBetween(startMoment, endMoment, null, '[]')) {
+        const timeOfDay = localizeAndFormatTime(intl, timeZone, currentBoundary);
+        // Choose the previous (aka first) sharp hour boundary,
+        // if daylight saving time (DST) creates the same time of day two times.
+        const newBoundary =
+            cumulatedResults &&
+            cumulatedResults.length > 0 &&
+            cumulatedResults.slice(-1)[0].timeOfDay === timeOfDay
+                ? []
+                : [
+                    {
+                        timestamp: currentBoundary.valueOf(),
+                        timeOfDay,
+                    },
+                ];
+
+        return findBookingUnitBoundaries({
+            ...params,
+            cumulatedResults: [...cumulatedResults, ...newBoundary],
+            currentBoundary: moment(nextBoundaryFn(timeZone, currentBoundary)),
+        });
+    }
+    return cumulatedResults;
+};
+
+export const localizeAndFormatDate = (intl, timeZone, date, formattingOptions = null) => {
+    if (!isTimeZoneSupported()) {
+        throw new Error(`Your browser doesn't support timezones.`);
+    }
+
+    if (!isValidTimeZone(timeZone)) {
+        throw new Error(`Given time zone key (${timeZone}) is not valid.`);
+    }
+
+    const format = formattingOptions || {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    };
+
+    return intl.formatTime(date, { ...format, timeZone });
+};
+
+
+
+export const getStartHours = (intl, timeZone, startTime, endTime) => {
+    const hours = getSharpHours(intl, timeZone, startTime, endTime);
+    return hours.length < 2 ? hours : hours.slice(0, -1);
+};
+
 export const formatDateStringToUTC = dateString => {
   return moment.utc(dateString).toDate();
 };
+
+export const getTimeZoneNames = relevantZonesRegExp => {
+    const allTimeZones = moment.tz.names();
+    return relevantZonesRegExp ? allTimeZones.filter(z => relevantZonesRegExp.test(z)) : allTimeZones;
+};
+
+export const isValidTimeZone = timeZone => {
+    try {
+        new Intl.DateTimeFormat('en-US', { timeZone }).format();
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
+
 
 /**
  * Formats string ('YYYY-MM-DD') to UTC format ('0000-00-00T00:00:00.000Z') and adds one day.
@@ -274,3 +439,130 @@ export const formatDateToText = (intl, date) => {
     }),
   };
 };
+
+export const isDayMomentInsideRange = (dayMoment, start, end, timeZone) => {
+    const startOfDay = moment.tz(dayMoment.toArray().slice(0, 3), timeZone);
+    const endOfDay = startOfDay.clone().add(1, 'days');
+
+    const startDate = moment.tz(start, timeZone);
+
+    // Removing 1 millisecond, solves the exclusivity issue.
+    // Because we are only using the date and not the exact time we can remove the
+    // 1ms from the end date.
+    const inclusiveEndDate = moment.tz(new Date(end.getTime() - 1), timeZone);
+
+    if (startOfDay.isSameOrAfter(startDate) && inclusiveEndDate.isSameOrAfter(endOfDay)) {
+        return true;
+    } else if (startDate.isBetween(startOfDay, endOfDay, null, '[)')) {
+        return true;
+    } else if (inclusiveEndDate.isBetween(startOfDay, endOfDay, null, '[)')) {
+        return true;
+    }
+
+    return false;
+};
+
+export const isInRange = (date, start, end, scope, timeZone) => {
+    // Range usually ends with 00:00, and with day scope,
+    // this means that exclusive end is wrongly taken into range.
+    const millisecondBeforeEndTime = new Date(end.getTime() - 1);
+    return timeZone
+        ? moment(date)
+            .tz(timeZone)
+            .isBetween(start, millisecondBeforeEndTime, scope, '[]')
+        : moment(date).isBetween(start, end, scope, '[)');
+};
+
+export const isSameDay = (date1, date2, timeZone) => {
+    const d1 = timeZone ? moment(date1).tz(timeZone) : moment(date1);
+    const d2 = timeZone ? moment(date2).tz(timeZone) : moment(date2);
+    return d1.isSame(d2, 'day');
+};
+
+export const localizeAndFormatTime = (
+    intl,
+    timeZone,
+    date,
+    formattingOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    }
+) => {
+    return localizeAndFormatDate(intl, timeZone, date, formattingOptions);
+};
+
+export const monthIdStringInTimeZone = (date, timeZone) =>
+    moment(date)
+        .tz(timeZone)
+        .format('YYYY-MM');
+
+export const nextMonthFn = (currentMoment, timeZone) => {
+    return timeZone
+        ? moment(currentMoment)
+            .clone()
+            .tz(timeZone)
+            .add(1, 'months')
+            .startOf('month')
+            .toDate()
+        : moment(currentMoment)
+            .clone()
+            .add(1, 'months')
+            .startOf('month')
+            .toDate();
+};
+
+export const prevMonthFn = (date, timeZone) => {
+    return timeZone
+        ? moment(date)
+            .clone()
+            .tz(timeZone)
+            .subtract(1, 'months')
+            .startOf('month')
+            .toDate()
+        : moment(date)
+            .clone()
+            .subtract(1, 'months')
+            .startOf('month')
+            .toDate();
+};
+
+export const resetToStartOfDay = (date, timeZone, offset = 0) => {
+    return moment(date)
+        .clone()
+        .tz(timeZone)
+        .startOf('day')
+        .add(offset, 'days')
+        .toDate();
+};
+
+export const timeOfDayFromLocalToTimeZone = (date, timeZone) => {
+    return moment.tz(moment(date).format('YYYY-MM-DD HH:mm:ss'), timeZone).toDate();
+};
+
+export const timeOfDayFromTimeZoneToLocal = (date, timeZone) => {
+    return moment(
+        moment(date)
+            .tz(timeZone)
+            .format('YYYY-MM-DD HH:mm:ss')
+    ).toDate();
+};
+
+export const timestampToDate = timestamp => {
+    return new Date(Number.parseInt(timestamp, 10));
+};
+
+export const isTimeZoneSupported = () => {
+    if (!Intl || typeof Intl === 'undefined' || typeof Intl.DateTimeFormat === 'undefined') {
+        return false;
+    }
+
+    const dtf = new Intl.DateTimeFormat();
+    if (typeof dtf === 'undefined' || typeof dtf.resolvedOptions === 'undefined') {
+        return false;
+    }
+    return !!dtf.resolvedOptions().timeZone;
+};
+
+
+

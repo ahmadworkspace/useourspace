@@ -11,6 +11,7 @@ import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { Button, Form, FieldCurrencyInput } from '../../components';
 import css from './EditListingPricingForm.css';
+import {LISTING_CONFIGS} from "../../marketplace-custom-config";
 
 const { Money } = sdkTypes;
 
@@ -32,7 +33,9 @@ export const EditListingPricingFormComponent = props => (
         fetchErrors,
       } = formRenderProps;
 
-      const unitType = config.bookingUnitType;
+      const selectedSpace = localStorage.getItem('value');
+
+      const unitType = LISTING_CONFIGS[selectedSpace].unitType;
       const isNightly = unitType === LINE_ITEM_NIGHT;
       const isDaily = unitType === LINE_ITEM_DAY;
 
