@@ -123,13 +123,127 @@ export const DYN_EMENTIES = {
 
 export const LISTING_CONFIGS = {
     tennis_court: {
-        unitType: LINE_ITEM_UNITS
+        unitType: LINE_ITEM_UNITS,
+        amenities: [
+            {
+                key: 'fully_fenced',
+                label: 'Fully fenced',
+            },
+            {
+                key: 'net_included',
+                label: 'Net included',
+            },
+            {
+                key: 'marked_Lines',
+                label: 'Marked Lines',
+            },
+        ]
     },
     soccer_field: {
-        unitType: LINE_ITEM_DAY
+        unitType: LINE_ITEM_DAY,
+        amenities: [
+            {
+                key: 'goals_with_nets',
+                label: 'Goals with nets',
+            },
+            {
+                key: 'marked_lines',
+                label: 'Marked lines',
+            },
+        ]
     },
     commercial_kitchens: {
-        unitType: LINE_ITEM_NIGHT
+        unitType: LINE_ITEM_NIGHT,
+        amenities: [
+            {
+                key: 'refrigeration_capacity',
+                label: 'Refrigeration Capacity',
+            },
+            {
+                key: 'freezer_capacity',
+                label: 'Freezer capacity',
+            },
+            {
+                key: 'stove_tops',
+                label: 'Stove tops',
+            },
+            {
+                key: 'ovens',
+                label: 'Ovens',
+            },
+            {
+                key: 'plates',
+                label: 'Plates',
+            },
+            {
+                key: 'cups',
+                label: 'Cups',
+            },
+            {
+                key: 'silverware',
+                label: 'Silverware',
+            },
+            {
+                key: 'cook_pots',
+                label: 'Cook pots',
+            },
+            {
+                key: 'frying_pans',
+                label: 'Frying pans',
+            },
+            {
+                key: 'baking_sheets',
+                label: 'Baking sheets',
+            },
+            {
+                key: 'cooking_utensils',
+                label: 'Cooking utensils',
+            },
+            {
+                key: 'specialty_utensils',
+                label: 'Specialty utensils',
+            },
+            {
+                key: 'measuring_cups',
+                label: 'Measuring cups',
+            },
+            {
+                key: 'hot_pads',
+                label: 'Hot pads',
+            },
+            {
+                key: 'dishwasher',
+                label: 'Dishwasher',
+            },
+            {
+                key: 'triple_sink',
+                label: 'Triple Sink',
+            },
+            {
+                key: 'dish_towels',
+                label: 'Dish towels',
+            },
+            {
+                key: 'hand_wash_station',
+                label: 'Hand wash station',
+            },
+            {
+                key: 'first_aid_kit',
+                label: 'First aid kit',
+            },
+            {
+                key: 'griddle',
+                label: 'Griddle',
+            },
+            {
+                key: 'barbeque',
+                label: 'Barbeque',
+            },
+            {
+                key: 'restroom',
+                label: 'Restroom Available',
+            },
+        ]
     }
 };
 

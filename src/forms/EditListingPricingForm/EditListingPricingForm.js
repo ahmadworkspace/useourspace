@@ -31,11 +31,12 @@ export const EditListingPricingFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+          listing
       } = formRenderProps;
 
-      const selectedSpace = localStorage.getItem('value');
+        const category = listing.attributes.publicData.category;
 
-      const unitType = LISTING_CONFIGS[selectedSpace].unitType;
+      const unitType = LISTING_CONFIGS[category] ? LISTING_CONFIGS[category].unitType : '';
       const isNightly = unitType === LINE_ITEM_NIGHT;
       const isDaily = unitType === LINE_ITEM_DAY;
 

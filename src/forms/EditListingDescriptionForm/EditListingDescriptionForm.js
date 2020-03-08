@@ -36,6 +36,7 @@ const EditListingDescriptionFormComponent = props => (
       const titlePlaceholderMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.titlePlaceholder',
       });
+
       const titleRequiredMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.titleRequired',
       });

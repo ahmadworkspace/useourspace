@@ -258,9 +258,9 @@ const EditListingWizardTab = props => {
         ? 'EditListingWizard.saveNewAvailability'
         : 'EditListingWizard.saveEditAvailability';
 
-        const selectedListing = localStorage.getItem('value');
+        const category = listing.attributes.publicData.category;
 
-        if (LISTING_CONFIGS[selectedListing].unitType === LINE_ITEM_UNITS) {
+        if (LISTING_CONFIGS[category].unitType === LINE_ITEM_UNITS) {
           return (
               <EditListingAvailabilityPanelHourly
                   {...panelProps(AVAILABILITY)}

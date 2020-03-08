@@ -65,6 +65,7 @@ const EditListingFeaturesPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
+        listing={listing}
       />
     </div>
   );
