@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import config from '../../config';
+import  * as custom from '../../marketplace-custom-config.js';
 import routeConfiguration from '../../routeConfiguration';
 import { LISTING_STATE_PENDING_APPROVAL, LISTING_STATE_CLOSED, propTypes } from '../../util/types';
 import { types as sdkTypes } from '../../util/sdkLoader';
@@ -52,7 +53,6 @@ import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
-import {getAmenties} from "../../marketplace-custom-config";
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
@@ -84,6 +84,7 @@ export class ListingPageComponent extends Component {
       pageClassNames: [],
       imageCarouselOpen: false,
       enquiryModalOpen: enquiryModalOpenForListingId === params.id,
+      amenities : [],
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -379,6 +380,29 @@ export class ListingPageComponent extends Component {
         </span>
       ) : null;
 
+const amenties = publicData.category;
+let ammenitiesvalue = "";
+
+if(amenties === 'tennis_court'){
+  ammenitiesvalue = custom.DYN_EMENTIES.tennis_court
+}
+else  if(amenties === 'soccer_field') {
+ammenitiesvalue = custom.DYN_EMENTIES.soccer_field
+ 
+}
+else if(amenties === 'commercial_kitchens'){
+
+ammenitiesvalue = custom.DYN_EMENTIES.commercial_kitchens
+
+}  
+else {
+ammenitiesvalue = [
+{
+key: 'not found',
+label:'No Amenities found for this category'
+}  
+]
+}
     return (
       <Page
         title={schemaTitle}
@@ -428,13 +452,14 @@ export class ListingPageComponent extends Component {
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={amenitiesConfig} publicData={publicData} />
+                  <SectionFeaturesMaybe options={ammenitiesvalue} publicData={publicData} />
                   <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
                     listingId={currentListing.id}
                   />
+                  
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                   <SectionHostMaybe
                     title={title}
@@ -475,8 +500,6 @@ export class ListingPageComponent extends Component {
   }
 }
 
-const amenties = localStorage.getItem('value');
-
 ListingPageComponent.defaultProps = {
   unitType: config.bookingUnitType,
   currentUser: null,
@@ -488,7 +511,7 @@ ListingPageComponent.defaultProps = {
   fetchTimeSlotsError: null,
   sendEnquiryError: null,
   categoriesConfig: config.custom.categories,
-  amenitiesConfig: getAmenties(amenties),
+  amenitiesConfig: config.custom.amenities,
 };
 
 ListingPageComponent.propTypes = {

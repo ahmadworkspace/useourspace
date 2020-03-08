@@ -19,16 +19,14 @@ const CustomCategorySelectFieldMaybe = props => {
   );
   return categories ? (
     
-    <select
+    <FieldSelect
       className={css.category}
       name={name}
       id={id}      
       label={categoryLabel}
-      //validate={categoryRequired}
-      onChange={(e) => localStorage.setItem('value', e.target.value)}
-      required
+      validate={categoryRequired}
     >
-      <option selected={true} disabled = "disabled" value="" >
+      <option  disabled value="" >
         {categoryPlaceholder}
       </option>
       {categories.map(c => (
@@ -36,7 +34,7 @@ const CustomCategorySelectFieldMaybe = props => {
           {c.label}
         </option>
       ))}
-      </select>
+      </FieldSelect>
     /* </FieldSelect>  */
   ) : null;
 };
