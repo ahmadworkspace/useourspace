@@ -104,6 +104,7 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+      onManageDisableScrolling,
       fetchExceptionsInProgress,
       availabilityExceptions,
   } = props;
@@ -118,43 +119,84 @@ const EditListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
-  const onCompleteEditListingWizardTab = (tab, updateValues) => {
-    // Normalize images for API call
-    const { images: updatedImages, ...otherValues } = updateValues;
-    const imageProperty =
-      typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
-    const updateValuesWithImages = { ...otherValues, ...imageProperty };
+  // const onCompleteEditListingWizardTab = (tab, updateValues) => {
+  //   // Normalize images for API call
+  //   const { images: updatedImages, ...otherValues } = updateValues;
+  //   const imageProperty =
+  //     typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
+  //   const updateValuesWithImages = { ...otherValues, ...imageProperty };
+  //
+  //   if (isNewListingFlow) {
+  //     const onUpsertListingDraft = isNewURI
+  //       ? (tab, updateValues) => onCreateListingDraft(updateValues)
+  //       : onUpdateListing;
+  //
+  //     const upsertValues = isNewURI
+  //       ? updateValuesWithImages
+  //       : { ...updateValuesWithImages, id: currentListing.id };
+  //
+  //     onUpsertListingDraft(tab, upsertValues)
+  //       .then(r => {
+  //         if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
+  //           // Create listing flow: smooth scrolling polyfill to scroll to correct tab
+  //           handleCreateFlowTabScrolling(false);
+  //
+  //           // After successful saving of draft data, user should be redirected to next tab
+  //           redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
+  //         } else {
+  //           handlePublishListing(currentListing.id);
+  //         }
+  //       })
+  //       .catch(e => {
+  //         // No need for extra actions
+  //       });
+  //   } else {
+  //     onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
+  //   }
+  // };
 
-    if (isNewListingFlow) {
-      const onUpsertListingDraft = isNewURI
-        ? (tab, updateValues) => onCreateListingDraft(updateValues)
-        : onUpdateListing;
+    const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
+        // Normalize images for API call
+        const { images: updatedImages, ...otherValues } = updateValues;
+        const imageProperty =
+            typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
+        const updateValuesWithImages = { ...otherValues, ...imageProperty };
 
-      const upsertValues = isNewURI
-        ? updateValuesWithImages
-        : { ...updateValuesWithImages, id: currentListing.id };
+        if (isNewListingFlow) {
+            const onUpsertListingDraft = isNewURI
+                ? (tab, updateValues) => onCreateListingDraft(updateValues)
+                : onUpdateListing;
 
-      onUpsertListingDraft(tab, upsertValues)
-        .then(r => {
-          if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
-            // Create listing flow: smooth scrolling polyfill to scroll to correct tab
-            handleCreateFlowTabScrolling(false);
+            const upsertValues = isNewURI
+                ? updateValuesWithImages
+                : { ...updateValuesWithImages, id: currentListing.id };
 
-            // After successful saving of draft data, user should be redirected to next tab
-            redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
-          } else {
-            handlePublishListing(currentListing.id);
-          }
-        })
-        .catch(e => {
-          // No need for extra actions
-        });
-    } else {
-      onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
-    }
-  };
+            return onUpsertListingDraft(tab, upsertValues)
+                .then(r => {
+                    if (tab !== AVAILABILITY && tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
+                        // Create listing flow: smooth scrolling polyfill to scroll to correct tab
+                        handleCreateFlowTabScrolling(false);
 
-  const panelProps = tab => {
+                        // After successful saving of draft data, user should be redirected to next tab
+                        redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
+                    } else if (tab === marketplaceTabs[marketplaceTabs.length - 1]) {
+                        handlePublishListing(currentListing.id);
+                    }
+                })
+                .catch(e => {
+                    if (passThrownErrors) {
+                        throw e;
+                    }
+                    // No need for extra actions
+                    // Error is logged in EditListingPage.duck file.
+                });
+        } else {
+            return onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
+        }
+    };
+
+
+    const panelProps = tab => {
     return {
       className: css.panel,
       errors,
@@ -162,6 +204,7 @@ const EditListingWizardTab = props => {
       onChange,
       panelUpdated: updatedTab === tab,
       updateInProgress,
+        onManageDisableScrolling,
       // newListingPublished and fetchInProgress are flags for the last wizard tab
       ready: newListingPublished,
       disabled: fetchInProgress,
@@ -259,8 +302,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditAvailability';
 
         const category = listing.attributes.publicData.category;
-
-        if (LISTING_CONFIGS[category].unitType === LINE_ITEM_UNITS) {
+        if (LISTING_CONFIGS[category] && LISTING_CONFIGS[category].unitType === LINE_ITEM_UNITS) {
           return (
               <EditListingAvailabilityPanelHourly
                   {...panelProps(AVAILABILITY)}
