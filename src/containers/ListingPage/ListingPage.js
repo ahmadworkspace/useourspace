@@ -381,7 +381,7 @@ export class ListingPageComponent extends Component {
         </span>
       ) : null;
 
-const amenties = getAmenties(publicData.category);
+const amenties = publicData ? getAmenties(publicData.category) : [];
 
     return (
       <Page
