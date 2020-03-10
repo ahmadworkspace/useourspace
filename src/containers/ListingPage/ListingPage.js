@@ -39,6 +39,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   BookingPanel,
+    HourlyBookingPanel,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
@@ -455,7 +456,7 @@ const amenties = publicData ? getAmenties(publicData.category) : [];
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                 </div>
-                <BookingPanel
+                <HourlyBookingPanel
                   className={css.bookingPanel}
                   listing={currentListing}
                   isOwnListing={isOwnListing}

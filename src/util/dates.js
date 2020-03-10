@@ -564,5 +564,9 @@ export const isTimeZoneSupported = () => {
     return !!dtf.resolvedOptions().timeZone;
 };
 
+export const calculateQuantityFromHours = (startDate, endDate) => {
+    return moment(endDate).diff(moment(startDate), 'hours', true);
+};
+
 
 
