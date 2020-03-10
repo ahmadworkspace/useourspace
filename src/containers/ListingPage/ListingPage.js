@@ -53,6 +53,7 @@ import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
+import {getAmenties} from "../../marketplace-custom-config";
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
@@ -380,29 +381,8 @@ export class ListingPageComponent extends Component {
         </span>
       ) : null;
 
-const amenties = publicData.category;
-let ammenitiesvalue = "";
+const amenties = getAmenties(publicData.category);
 
-if(amenties === 'tennis_court'){
-  ammenitiesvalue = custom.DYN_EMENTIES.tennis_court
-}
-else  if(amenties === 'soccer_field') {
-ammenitiesvalue = custom.DYN_EMENTIES.soccer_field
- 
-}
-else if(amenties === 'commercial_kitchens'){
-
-ammenitiesvalue = custom.DYN_EMENTIES.commercial_kitchens
-
-}  
-else {
-ammenitiesvalue = [
-{
-key: 'not found',
-label:'No Amenities found for this category'
-}  
-]
-}
     return (
       <Page
         title={schemaTitle}
@@ -452,14 +432,14 @@ label:'No Amenities found for this category'
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={ammenitiesvalue} publicData={publicData} />
+                  <SectionFeaturesMaybe options={amenties} publicData={publicData} />
                   <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
                     listingId={currentListing.id}
                   />
-                  
+
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                   <SectionHostMaybe
                     title={title}
