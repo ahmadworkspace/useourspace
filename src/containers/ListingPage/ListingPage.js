@@ -8,7 +8,14 @@ import { withRouter } from 'react-router-dom';
 import config from '../../config';
 import  * as custom from '../../marketplace-custom-config.js';
 import routeConfiguration from '../../routeConfiguration';
-import { LISTING_STATE_PENDING_APPROVAL, LISTING_STATE_CLOSED, propTypes } from '../../util/types';
+import { timestampToDate, calculateQuantityFromHours } from '../../util/dates';
+import {
+    LISTING_STATE_PENDING_APPROVAL,
+    LISTING_STATE_CLOSED,
+    propTypes,
+    LINE_ITEM_UNITS,
+    LINE_ITEM_DAY
+} from '../../util/types';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
@@ -54,7 +61,7 @@ import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
-import {getAmenties} from "../../marketplace-custom-config";
+import {getAmenties, LISTING_CONFIGS} from "../../marketplace-custom-config";
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
@@ -94,47 +101,54 @@ export class ListingPageComponent extends Component {
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
 
-  handleSubmit(values) {
-    const {
-      history,
-      getListing,
-      params,
-      callSetInitialValues,
-      onInitializeCardPaymentData,
-    } = this.props;
-    const listingId = new UUID(params.id);
-    const listing = getListing(listingId);
+    handleSubmit(values) {
+        const {
+            history,
+            getListing,
+            params,
+            callSetInitialValues,
+            onInitializeCardPaymentData,
+        } = this.props;
+        const listingId = new UUID(params.id);
+        const listing = getListing(listingId);
 
-    const { bookingDates, ...bookingData } = values;
+        const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
+        const bookingStart = timestampToDate(bookingStartTime);
+        const bookingEnd = timestampToDate(bookingEndTime);
 
-    const initialValues = {
-      listing,
-      bookingData,
-      bookingDates: {
-        bookingStart: bookingDates.startDate,
-        bookingEnd: bookingDates.endDate,
-      },
-      confirmPaymentError: null,
-    };
+        const bookingData = {
+            quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
+            ...restOfValues,
+        };
 
-    const routes = routeConfiguration();
-    // Customize checkout page state with current listing and selected bookingDates
-    const { setInitialValues } = findRouteByRouteName('CheckoutPage', routes);
-    callSetInitialValues(setInitialValues, initialValues);
+        const initialValues = {
+            listing,
+            bookingData,
+            bookingDates: {
+                bookingStart,
+                bookingEnd,
+            },
+            confirmPaymentError: null,
+        };
 
-    // Clear previous Stripe errors from store if there is any
-    onInitializeCardPaymentData();
+        const routes = routeConfiguration();
+        // Customize checkout page state with current listing and selected bookingDates
+        const { setInitialValues } = findRouteByRouteName('CheckoutPage', routes);
+        callSetInitialValues(setInitialValues, initialValues);
 
-    // Redirect to CheckoutPage
-    history.push(
-      createResourceLocatorString(
-        'CheckoutPage',
-        routes,
-        { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
-        {}
-      )
-    );
-  }
+        // Clear previous Stripe errors from store if there is any
+        onInitializeCardPaymentData();
+
+        // Redirect to CheckoutPage
+        history.push(
+            createResourceLocatorString(
+                'CheckoutPage',
+                routes,
+                { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
+                {}
+            )
+        );
+    }
 
   onContactUser() {
     const { currentUser, history, callSetInitialValues, params, location } = this.props;
@@ -175,7 +189,6 @@ export class ListingPageComponent extends Component {
 
   render() {
     const {
-      unitType,
       isAuthenticated,
       currentUser,
       getListing,
@@ -383,6 +396,8 @@ export class ListingPageComponent extends Component {
       ) : null;
 
 const amenties = publicData ? getAmenties(publicData.category) : [];
+const unitType = publicData ? LISTING_CONFIGS[publicData.category] ? LISTING_CONFIGS[publicData.category].unitType : LINE_ITEM_DAY : LINE_ITEM_DAY;
+debugger;
 
     return (
       <Page
@@ -456,19 +471,36 @@ const amenties = publicData ? getAmenties(publicData.category) : [];
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                 </div>
-                <HourlyBookingPanel
-                  className={css.bookingPanel}
-                  listing={currentListing}
-                  isOwnListing={isOwnListing}
-                  unitType={unitType}
-                  onSubmit={handleBookingSubmit}
-                  title={bookingTitle}
-                  subTitle={bookingSubTitle}
-                  authorDisplayName={authorDisplayName}
-                  onManageDisableScrolling={onManageDisableScrolling}
-                  timeSlots={timeSlots}
-                  fetchTimeSlotsError={fetchTimeSlotsError}
-                />
+                  {unitType === LINE_ITEM_UNITS ? (
+                      <HourlyBookingPanel
+                          className={css.bookingPanel}
+                          listing={currentListing}
+                          isOwnListing={isOwnListing}
+                          unitType={unitType}
+                          onSubmit={handleBookingSubmit}
+                          title={bookingTitle}
+                          subTitle={bookingSubTitle}
+                          authorDisplayName={authorDisplayName}
+                          onManageDisableScrolling={onManageDisableScrolling}
+                          timeSlots={timeSlots}
+                          fetchTimeSlotsError={fetchTimeSlotsError}
+                      />
+                  ) : (
+                      <BookingPanel
+                          className={css.bookingPanel}
+                          listing={currentListing}
+                          isOwnListing={isOwnListing}
+                          unitType={unitType}
+                          onSubmit={handleBookingSubmit}
+                          title={bookingTitle}
+                          subTitle={bookingSubTitle}
+                          authorDisplayName={authorDisplayName}
+                          onManageDisableScrolling={onManageDisableScrolling}
+                          timeSlots={timeSlots}
+                          fetchTimeSlotsError={fetchTimeSlotsError}
+                      />
+                  )}
+
               </div>
             </div>
           </LayoutWrapperMain>

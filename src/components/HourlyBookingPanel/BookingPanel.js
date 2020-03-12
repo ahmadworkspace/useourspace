@@ -50,7 +50,7 @@ const closeBookModal = (history, location) => {
 
 const dateFormattingOptions = { month: 'short', day: 'numeric', weekday: 'short' };
 
-const BookingPanel = props => {
+const HourlyBookingPanel = props => {
   const {
     rootClassName,
     className,
@@ -170,7 +170,7 @@ const BookingPanel = props => {
   );
 };
 
-BookingPanel.defaultProps = {
+HourlyBookingPanel.defaultProps = {
   rootClassName: null,
   className: null,
   titleClassName: null,
@@ -180,7 +180,7 @@ BookingPanel.defaultProps = {
   monthlyTimeSlots: null,
 };
 
-BookingPanel.propTypes = {
+HourlyBookingPanel.propTypes = {
   rootClassName: string,
   className: string,
   titleClassName: string,
@@ -210,4 +210,4 @@ BookingPanel.propTypes = {
 export default compose(
   withRouter,
   injectIntl
-)(BookingPanel);
+)(HourlyBookingPanel);

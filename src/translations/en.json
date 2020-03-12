@@ -80,7 +80,7 @@
   "BookingPanel.hostedBy": "Hosted by {name}",
   "BookingPanel.perDay": "per day",
   "BookingPanel.perNight": "per night",
-  "BookingPanel.perUnit": "per unit",
+  "BookingPanel.perUnit": "per hour",
   "BookingTimeForm.bookingEndTitle": "End date",
   "BookingTimeForm.bookingStartTitle": "Pick a date",
   "BookingTimeForm.listingCurrencyInvalid": "Oops, the currency on the teacher profile doesn't match the currency of the marketplace.",
