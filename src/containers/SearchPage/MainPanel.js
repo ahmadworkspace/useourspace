@@ -21,7 +21,7 @@ class MainPanel extends Component {
   }
 
   render() {
-    const {
+    let {
       className,
       rootClassName,
       urlQueryParams,
@@ -40,6 +40,9 @@ class MainPanel extends Component {
       primaryFilters,
       secondaryFilters,
     } = this.props;
+
+    console.log(listings, 'list');
+    listings = listings ? listings.filter(listing => listing.attributes.publicData.category === urlQueryParams.pub_category) : [];
 
     const isSearchFiltersPanelOpen = !!secondaryFilters && this.state.isSearchFiltersPanelOpen;
 

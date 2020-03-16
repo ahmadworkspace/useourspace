@@ -397,7 +397,7 @@ export class ListingPageComponent extends Component {
 
 const amenties = publicData ? getAmenties(publicData.category) : [];
 const unitType = publicData ? LISTING_CONFIGS[publicData.category] ? LISTING_CONFIGS[publicData.category].unitType : LINE_ITEM_DAY : LINE_ITEM_DAY;
-debugger;
+// debugger;
 
     return (
       <Page
