@@ -41,8 +41,8 @@ class MainPanel extends Component {
       secondaryFilters,
     } = this.props;
 
-    console.log(listings, 'list');
-    listings = listings ? listings.filter(listing => listing.attributes.publicData.category === urlQueryParams.pub_category) : [];
+    if (urlQueryParams.pub_category)
+      listings = listings ? listings.filter(listing => listing.attributes.publicData.category === urlQueryParams.pub_category) : [];
 
     const isSearchFiltersPanelOpen = !!secondaryFilters && this.state.isSearchFiltersPanelOpen;
 

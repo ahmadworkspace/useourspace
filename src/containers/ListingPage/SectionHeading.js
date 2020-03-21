@@ -5,10 +5,13 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
 import config from '../../config';
 
 import css from './ListingPage.css';
+import {LISTING_CONFIGS} from "../../marketplace-custom-config";
+import SectionMapMaybe from "./SectionMapMaybe";
 
 const SectionHeading = props => {
   const {
     priceTitle,
+      publicData,
     formattedPrice,
     richTitle,
     category,
@@ -17,15 +20,17 @@ const SectionHeading = props => {
     onContactUser,
   } = props;
 
-  const unitType = config.bookingUnitType;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
+    const unitType = publicData.category ? LISTING_CONFIGS[publicData.category] ? LISTING_CONFIGS[publicData.category].unitType : LINE_ITEM_DAY : LINE_ITEM_DAY;
+
+    const isNightly = unitType === LINE_ITEM_NIGHT;
+    const isDaily = unitType === LINE_ITEM_DAY;
+
 
   const unitTranslationKey = isNightly
-    ? 'ListingPage.perNight'
+    ? 'ListingPage.perDay'
     : isDaily
     ? 'ListingPage.perDay'
-    : 'ListingPage.perUnit';
+    : 'per hour';
 
   return (
     <div className={css.sectionHeading}>

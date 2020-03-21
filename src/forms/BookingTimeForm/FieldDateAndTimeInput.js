@@ -157,7 +157,6 @@ const getAllTimeValues = (
 
 const getMonthlyTimeSlots = (monthlyTimeSlots, date, timeZone) => {
   const monthId = monthIdStringInTimeZone(date, timeZone);
-
   return !monthlyTimeSlots || Object.keys(monthlyTimeSlots).length === 0
     ? []
     : monthlyTimeSlots[monthId] && monthlyTimeSlots[monthId].timeSlots

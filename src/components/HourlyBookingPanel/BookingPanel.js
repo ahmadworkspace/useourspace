@@ -75,6 +75,7 @@ const HourlyBookingPanel = props => {
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
   const showBookingTimeForm = hasListingState && !isClosed;
+  console.log(showBookingTimeForm, '.....');
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;

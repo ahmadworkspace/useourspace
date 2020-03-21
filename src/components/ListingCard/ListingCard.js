@@ -12,6 +12,7 @@ import config from '../../config';
 import { NamedLink, ResponsiveImage } from '../../components';
 
 import css from './ListingCard.css';
+import {LISTING_CONFIGS} from "../../marketplace-custom-config";
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
@@ -55,15 +56,17 @@ export const ListingCardComponent = props => {
 
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
-  const unitType = config.bookingUnitType;
+  const category = listing.attributes.publicData.category;
+  const unitType = category ? LISTING_CONFIGS[category] ? LISTING_CONFIGS[category].unitType : LINE_ITEM_DAY : LINE_ITEM_DAY;
+
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
   const unitTranslationKey = isNightly
-    ? 'ListingCard.perNight'
+    ? 'ListingCard.perDay'
     : isDaily
     ? 'ListingCard.perDay'
-    : 'ListingCard.perUnit';
+    : 'Per Hour';
 
   return (
     <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
