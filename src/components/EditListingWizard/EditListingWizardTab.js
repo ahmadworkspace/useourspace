@@ -23,7 +23,7 @@ import {
 } from '../../components';
 
 import css from './EditListingWizard.css';
-import {LISTING_CONFIGS} from "../../marketplace-custom-config";
+import {LISTING_CONFIGS, SUPPORTED_TABS} from "../../marketplace-custom-config";
 import {LINE_ITEM_UNITS} from "../../util/types";
 import EditListingAvailabilityPanelHourly from "../EditListingAvailabilityPanel/EditListingAvailabilityPanelHourly";
 
@@ -37,16 +37,16 @@ export const PHOTOS = 'photos';
 export const CAPACITY = 'capacity';
 
 // EditListingWizardTab component supports these tabs
-export const SUPPORTED_TABS = [
-  DESCRIPTION,
-  FEATURES,
-  CAPACITY,
-  POLICY,
-  LOCATION,
-  PRICING,
-  AVAILABILITY,
-  PHOTOS,
-];
+// export const SUPPORTED_TABS = [
+//   DESCRIPTION,
+//   FEATURES,
+//   CAPACITY,
+//   POLICY,
+//   LOCATION,
+//   PRICING,
+//   AVAILABILITY,
+//   PHOTOS,
+// ];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;

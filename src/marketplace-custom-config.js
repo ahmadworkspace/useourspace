@@ -1,8 +1,26 @@
+import {LINE_ITEM_DAY, LINE_ITEM_NIGHT, LINE_ITEM_UNITS} from "./util/types";
 /*
  * Marketplace specific configuration.
  */
+export const AVAILABILITY = 'availability';
+export const DESCRIPTION = 'description';
+export const FEATURES = 'features';
+export const POLICY = 'policy';
+export const LOCATION = 'location';
+export const PRICING = 'pricing';
+export const PHOTOS = 'photos';
+export const CAPACITY = 'capacity';
 
-import {LINE_ITEM_DAY, LINE_ITEM_NIGHT, LINE_ITEM_UNITS} from "./util/types";
+export const SUPPORTED_TABS = [
+    DESCRIPTION,
+    FEATURES,
+    CAPACITY,
+    POLICY,
+    LOCATION,
+    PRICING,
+    AVAILABILITY,
+    PHOTOS,
+];
 
 export const DYN_EMENTIES = {
     tennis_court: [
@@ -137,6 +155,16 @@ export const LISTING_CONFIGS = {
                 key: 'marked_Lines',
                 label: 'Marked Lines',
             },
+        ],
+        tabs: [
+            DESCRIPTION,
+            FEATURES,
+            CAPACITY,
+            POLICY,
+            LOCATION,
+            PRICING,
+            AVAILABILITY,
+            PHOTOS,
         ]
     },
     soccer_field: {
@@ -150,6 +178,14 @@ export const LISTING_CONFIGS = {
                 key: 'marked_lines',
                 label: 'Marked lines',
             },
+        ],
+        tabs: [
+            DESCRIPTION,
+            FEATURES,
+            LOCATION,
+            PRICING,
+            AVAILABILITY,
+            PHOTOS,
         ]
     },
     commercial_kitchens: {
@@ -243,6 +279,15 @@ export const LISTING_CONFIGS = {
                 key: 'restroom',
                 label: 'Restroom Available',
             },
+        ],
+        tabs: [
+            DESCRIPTION,
+            FEATURES,
+            CAPACITY,
+            POLICY,
+            LOCATION,
+            AVAILABILITY,
+            PHOTOS,
         ]
     }
 };

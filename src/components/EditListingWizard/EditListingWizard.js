@@ -17,17 +17,20 @@ import { ensureCurrentUser, ensureListing } from '../../util/data';
 import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '../../components';
 import { StripeConnectAccountForm } from '../../forms';
 
-import EditListingWizardTab, {
-  AVAILABILITY,
-  DESCRIPTION,
-  FEATURES,
-  CAPACITY,
-  POLICY,
-  LOCATION,
-  PRICING,
-  PHOTOS,
-} from './EditListingWizardTab';
+import EditListingWizardTab from './EditListingWizardTab';
+
+import {
+    AVAILABILITY,
+    DESCRIPTION,
+    FEATURES,
+    CAPACITY,
+    POLICY,
+    LOCATION,
+    PRICING,
+    PHOTOS, LISTING_CONFIGS,
+} from './../../marketplace-custom-config';
 import css from './EditListingWizard.css';
+import {SUPPORTED_TABS} from "../../marketplace-custom-config";
 
 // Show availability calendar only if environment variable availabilityEnabled is true
 const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
@@ -36,15 +39,15 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // Note 1: You need to change save button translations for new listing flow
 // Note 2: Ensure that draft listing is created after the first panel
 // and listing publishing happens after last panel.
-export const TABS = [
-  DESCRIPTION,
-  FEATURES,
-  CAPACITY,
-  POLICY,
-  LOCATION,
-  PRICING,
-  ...availabilityMaybe,
-  PHOTOS,
+export let TABS = [
+    DESCRIPTION,
+    FEATURES,
+    CAPACITY,
+    POLICY,
+    LOCATION,
+    PRICING,
+    AVAILABILITY,
+    PHOTOS,
 ];
 
 // Tabs are horizontal in small screens
@@ -124,6 +127,12 @@ const tabCompleted = (tab, listing) => {
  * @return object containing activity / editability of different tabs of this wizard
  */
 const tabsActive = (isNew, listing) => {
+  const category = listing.attributes.publicData.category;
+  if (category) {
+      TABS = LISTING_CONFIGS[category] ? LISTING_CONFIGS[category].tabs : TABS;
+      if (!TABS.length)
+        TABS = SUPPORTED_TABS;
+  }
   return TABS.reduce((acc, tab) => {
     const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
     const isActive =
