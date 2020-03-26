@@ -165,6 +165,28 @@ export const LISTING_CONFIGS = {
             PRICING,
             AVAILABILITY,
             PHOTOS,
+        ],
+        rules: [
+            {
+                key: 'no_smoking',
+                label: 'No smoking',
+            },
+            {
+                key: 'no_food',
+                label: 'No food',
+            },
+            {
+                key: 'no_drinks',
+                label: 'No drinks',
+            },
+            {
+                key: 'no_pets_animals',
+                label: 'No pets/animals',
+            },
+            {
+                key: 'no_candles',
+                label: 'No candles',
+            },
         ]
     },
     soccer_field: {

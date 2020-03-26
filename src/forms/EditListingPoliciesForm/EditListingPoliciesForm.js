@@ -5,13 +5,16 @@ import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { Form, Button, FieldTextInput } from '../../components';
+import {Form, Button, FieldTextInput, FieldCheckboxGroup} from '../../components';
+import arrayMutators from 'final-form-arrays';
 
 import css from './EditListingPoliciesForm.css';
+import {LISTING_CONFIGS} from "../../marketplace-custom-config";
 
 export const EditListingPoliciesFormComponent = props => (
   <FinalForm
     {...props}
+    mutators={{ ...arrayMutators }}
     render={formRenderProps => {
       const {
         className,
@@ -20,6 +23,7 @@ export const EditListingPoliciesFormComponent = props => (
         handleSubmit,
         intl,
         invalid,
+          listing,
         pristine,
         saveActionMsg,
         updated,
@@ -50,8 +54,11 @@ export const EditListingPoliciesFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
+        const category = listing.attributes.publicData.category;
+        const rules = LISTING_CONFIGS[category] ?  LISTING_CONFIGS[category].rules : [];
 
-      return (
+
+        return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
@@ -65,7 +72,17 @@ export const EditListingPoliciesFormComponent = props => (
             placeholder={rulesPlaceholderMessage}
           />
 
-          <Button
+
+
+            <FieldCheckboxGroup
+                className={css.policy}
+                id={'rules'}
+                name={'rules'}
+                options={rules}
+            />
+
+
+            <Button
             className={css.submitButton}
             type="submit"
             inProgress={submitInProgress}
