@@ -22,9 +22,125 @@ export const SUPPORTED_TABS = [
   PHOTOS,
 ];
 
-
+// export const DYN_EMENTIES = {
+//     tennis_court: [
+//         {
+//             key: 'fully_fenced',
+//             label: 'Fully fenced',
+//         },
+//         {
+//             key: 'net_included',
+//             label: 'Net included',
+//         },
+//         {
+//             key: 'marked_Lines',
+//             label: 'Marked Lines',
+//         },
+//     ],
+//     soccer_field: [
+//         {
+//             key: 'goals_with_nets',
+//             label: 'Goals with nets',
+//         },
+//         {
+//             key: 'marked_lines',
+//             label: 'Marked lines',
+//         },
+//     ],
+//     commercial_kitchens: [
+//         {
+//             key: 'refrigeration_capacity',
+//             label: 'Refrigeration Capacity',
+//         },
+//         {
+//             key: 'freezer_capacity',
+//             label: 'Freezer capacity',
+//         },
+//         {
+//             key: 'stove_tops',
+//             label: 'Stove tops',
+//         },
+//         {
+//             key: 'ovens',
+//             label: 'Ovens',
+//         },
+//         {
+//             key: 'plates',
+//             label: 'Plates',
+//         },
+//         {
+//             key: 'cups',
+//             label: 'Cups',
+//         },
+//         {
+//             key: 'silverware',
+//             label: 'Silverware',
+//         },
+//         {
+//             key: 'cook_pots',
+//             label: 'Cook pots',
+//         },
+//         {
+//             key: 'frying_pans',
+//             label: 'Frying pans',
+//         },
+//         {
+//             key: 'baking_sheets',
+//             label: 'Baking sheets',
+//         },
+//         {
+//             key: 'cooking_utensils',
+//             label: 'Cooking utensils',
+//         },
+//         {
+//             key: 'specialty_utensils',
+//             label: 'Specialty utensils',
+//         },
+//         {
+//             key: 'measuring_cups',
+//             label: 'Measuring cups',
+//         },
+//         {
+//             key: 'hot_pads',
+//             label: 'Hot pads',
+//         },
+//         {
+//             key: 'dishwasher',
+//             label: 'Dishwasher',
+//         },
+//         {
+//             key: 'triple_sink',
+//             label: 'Triple Sink',
+//         },
+//         {
+//             key: 'dish_towels',
+//             label: 'Dish towels',
+//         },
+//         {
+//             key: 'hand_wash_station',
+//             label: 'Hand wash station',
+//         },
+//         {
+//             key: 'first_aid_kit',
+//             label: 'First aid kit',
+//         },
+//         {
+//             key: 'griddle',
+//             label: 'Griddle',
+//         },
+//         {
+//             key: 'barbeque',
+//             label: 'Barbeque',
+//         },
+//         {
+//             key: 'restroom',
+//             label: 'Restroom Available',
+//         },
+//     ]
+// };
 
 export const LISTING_CONFIGS = {
+
   auditoriums: {
     unitType: LINE_ITEM_UNITS,
     amenities: [
@@ -82,6 +198,28 @@ export const LISTING_CONFIGS = {
       PRICING,
       AVAILABILITY,
       PHOTOS,
+    ],
+    rules: [
+      {
+        key: 'no_smoking',
+        label: 'No smoking',
+      },
+      {
+        key: 'no_food',
+        label: 'No food',
+      },
+      {
+        key: 'no_drinks',
+        label: 'No drinks',
+      },
+      {
+        key: 'no_pets_animals',
+        label: 'No pets/animals',
+      },
+      {
+        key: 'no_candles',
+        label: 'No candles',
+      },
     ]
   },
 
@@ -144,6 +282,28 @@ export const LISTING_CONFIGS = {
       PRICING,
       AVAILABILITY,
       PHOTOS,
+    ],
+    rules: [
+      {
+        key: 'no_smoking',
+        label: 'No smoking',
+      },
+      {
+        key: 'no_food',
+        label: 'No food',
+      },
+      {
+        key: 'no_drinks',
+        label: 'No drinks',
+      },
+      {
+        key: 'no_pets_animals',
+        label: 'No pets/animals',
+      },
+      {
+        key: 'no_candles',
+        label: 'No candles',
+      },
     ]
   },
 
@@ -204,6 +364,28 @@ export const LISTING_CONFIGS = {
       PRICING,
       AVAILABILITY,
       PHOTOS,
+    ],
+    rules: [
+      {
+        key: 'no_smoking',
+        label: 'No smoking',
+      },
+      {
+        key: 'no_food',
+        label: 'No food',
+      },
+      {
+        key: 'no_drinks',
+        label: 'No drinks',
+      },
+      {
+        key: 'no_pets_animals',
+        label: 'No pets/animals',
+      },
+      {
+        key: 'no_candles',
+        label: 'No candles',
+      },
     ]
   },
 
@@ -300,6 +482,28 @@ export const LISTING_CONFIGS = {
       PRICING,
       AVAILABILITY,
       PHOTOS,
+    ],
+    rules: [
+      {
+        key: 'no_smoking',
+        label: 'No smoking',
+      },
+      {
+        key: 'no_food',
+        label: 'No food',
+      },
+      {
+        key: 'no_drinks',
+        label: 'No drinks',
+      },
+      {
+        key: 'no_pets_animals',
+        label: 'No pets/animals',
+      },
+      {
+        key: 'no_candles',
+        label: 'No candles',
+      },
     ]
   },
   mini_storage: {
@@ -343,6 +547,28 @@ export const LISTING_CONFIGS = {
       PRICING,
       AVAILABILITY,
       PHOTOS,
+    ],
+    rules: [
+      {
+        key: 'no_smoking',
+        label: 'No smoking',
+      },
+      {
+        key: 'no_food',
+        label: 'No food',
+      },
+      {
+        key: 'no_drinks',
+        label: 'No drinks',
+      },
+      {
+        key: 'no_pets_animals',
+        label: 'No pets/animals',
+      },
+      {
+        key: 'no_candles',
+        label: 'No candles',
+      },
     ]
   },
   boat_storage: {
@@ -386,8 +612,140 @@ export const LISTING_CONFIGS = {
       PRICING,
       AVAILABILITY,
       PHOTOS,
+    ],
+    rules: [
+      {
+        key: 'no_smoking',
+        label: 'No smoking',
+      },
+      {
+        key: 'no_food',
+        label: 'No food',
+      },
+      {
+        key: 'no_drinks',
+        label: 'No drinks',
+      },
+      {
+        key: 'no_pets_animals',
+        label: 'No pets/animals',
+      },
+      {
+        key: 'no_candles',
+        label: 'No candles',
+      },
     ]
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // tennis_court: {
+  //     unitType: LINE_ITEM_UNITS,
+  //     amenities: [
+  //         {
+  //             key: 'fully_fenced',
+  //             label: 'Fully fenced',
+  //         },
+  //         {
+  //             key: 'net_included',
+  //             label: 'Net included',
+  //         },
+  //         {
+  //             key: 'marked_Lines',
+  //             label: 'Marked Lines',
+  //         },
+  //     ],
+  //     tabs: [
+  //         DESCRIPTION,
+  //         FEATURES,
+  //         CAPACITY,
+  //         POLICY,
+  //         LOCATION,
+  //         PRICING,
+  //         AVAILABILITY,
+  //         PHOTOS,
+  //     ],
+  //     rules: [
+  //         {
+  //             key: 'no_smoking',
+  //             label: 'No smoking',
+  //         },
+  //         {
+  //             key: 'no_food',
+  //             label: 'No food',
+  //         },
+  //         {
+  //             key: 'no_drinks',
+  //             label: 'No drinks',
+  //         },
+  //         {
+  //             key: 'no_pets_animals',
+  //             label: 'No pets/animals',
+  //         },
+  //         {
+  //             key: 'no_candles',
+  //             label: 'No candles',
+  //         },
+  //     ]
+  // },
+  // soccer_field: {
+  //     unitType: LINE_ITEM_DAY,
+  //     amenities: [
+  //         {
+  //             key: 'goals_with_nets',
+  //             label: 'Goals with nets',
+  //         },
+  //         {
+  //             key: 'marked_lines',
+  //             label: 'Marked lines',
+  //         },
+  //     ],
+  //     tabs: [
+  //         DESCRIPTION,
+  //         FEATURES,
+  //         LOCATION,
+  //         PRICING,
+  //         AVAILABILITY,
+  //         PHOTOS,
+  //     ]
+  // },
+  // commercial_kitchens: {
+  //     unitType: LINE_ITEM_NIGHT,
+  //     amenities: [
+  //         {
+  //             key: 'refrigeration_capacity',
+  //             label: 'Refrigeration Capacity',
+  //         },
+  //
+  //         {
+  //             key: 'restroom',
+  //             label: 'Restroom Available',
+  //         },
+  //     ],
+  //     tabs: [
+  //         DESCRIPTION,
+  //         FEATURES,
+  //         CAPACITY,
+  //         POLICY,
+  //         LOCATION,
+  //         AVAILABILITY,
+  //         PHOTOS,
+  //     ]
+  // }
 };
 
 
@@ -403,7 +761,31 @@ export const getAmenties = (key) => {
 };
 
 
+export const amenitiesSoccerField = [
+  {
+    key: 'goals_with_nets',
+    label: 'Goals with nets',
+  },
+  {
+    key: 'marked_lines',
+    label: 'Marked lines',
+  },
 
+];
+export const tennis_court = [
+  {
+    key: 'fully_fenced',
+    label: 'Fully fenced',
+  },
+  {
+    key: 'net_included',
+    label: 'Net included',
+  },
+  {
+    key: 'marked_Lines',
+    label: 'Marked Lines',
+  },
+];
 export const amenities = [
   {
     key: 'refrigeration_capacity',
@@ -528,6 +910,7 @@ export const amenities1 = [
     label: 'Own food allowed',
   },
 ];
+
 
 export const categories = [
   { key: 'auditoriums', label: 'Auditoriums' },
