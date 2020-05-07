@@ -5,8 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import omit from 'lodash/omit';
-import * as custom from '../../marketplace-custom-config.js';
-import list from '../../forms/EditListingFeaturesForm/EditListingFeaturesForm';
+import {LISTING_CONFIGS} from '../../marketplace-custom-config.js';
 
 import {
   BookingDateRangeFilter,
@@ -169,7 +168,7 @@ const SearchFiltersComponent = props => {
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
 
- 
+
   const categoryFilterElement = categoryFilter ? (
     <SelectSingleFilter
       urlParam={categoryFilter.paramName}
@@ -179,32 +178,33 @@ const SearchFiltersComponent = props => {
       options={categoryFilter.options}
       initialValue={initialCategory}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-      
+
     />
   ) : null;
 
   // Here are the conditions for specified category.
-// if you want to add new amenities for a specific category add new if condition before last else. 
+// if you want to add new amenities for a specific category add new if condition before last else.
 let ammenitiesvalue = "";
 const amenties = sessionStorage.getItem('value');
-if(amenties === 'tennis_court'){
-  ammenitiesvalue = custom.DYN_EMENTIES.tennis_court
-}
-else  if(amenties === 'soccer_field') {
-ammenitiesvalue = custom.DYN_EMENTIES.soccer_field
- 
-}
-else if(amenties === 'commercial_kitchens'){
+// if(amenties === 'tennis_court'){
+//   ammenitiesvalue = LISTING_CONFIGS.tennis_court
+// }
+// else  if(amenties === 'soccer_field') {
+// ammenitiesvalue = LISTING_CONFIGS.soccer_field
+//
+// }
+// else
+  if(amenties === 'commercial_kitchens'){
 
-ammenitiesvalue = custom.DYN_EMENTIES.commercial_kitchens
+ammenitiesvalue = LISTING_CONFIGS.commercial_kitchens
 
-}  
+}
 else {
 ammenitiesvalue = [
 {
 key: 'not found',
 label:'No Amenities found for this category'
-}  
+}
 ]
 }
 
@@ -219,7 +219,7 @@ label:'No Amenities found for this category'
       options={ammenitiesvalue}
       initialValues={initialAmenities}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-      
+
     />
   ) : null;
   const priceFilterElement = priceFilter ? (

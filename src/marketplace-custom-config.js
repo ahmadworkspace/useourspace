@@ -22,122 +22,122 @@ export const SUPPORTED_TABS = [
     PHOTOS,
 ];
 
-// export const DYN_EMENTIES = {
-//     tennis_court: [
-//         {
-//             key: 'fully_fenced',
-//             label: 'Fully fenced',
-//         },
-//         {
-//             key: 'net_included',
-//             label: 'Net included',
-//         },
-//         {
-//             key: 'marked_Lines',
-//             label: 'Marked Lines',
-//         },
-//     ],
-//     soccer_field: [
-//         {
-//             key: 'goals_with_nets',
-//             label: 'Goals with nets',
-//         },
-//         {
-//             key: 'marked_lines',
-//             label: 'Marked lines',
-//         },
-//     ],
-//     commercial_kitchens: [
-//         {
-//             key: 'refrigeration_capacity',
-//             label: 'Refrigeration Capacity',
-//         },
-//         {
-//             key: 'freezer_capacity',
-//             label: 'Freezer capacity',
-//         },
-//         {
-//             key: 'stove_tops',
-//             label: 'Stove tops',
-//         },
-//         {
-//             key: 'ovens',
-//             label: 'Ovens',
-//         },
-//         {
-//             key: 'plates',
-//             label: 'Plates',
-//         },
-//         {
-//             key: 'cups',
-//             label: 'Cups',
-//         },
-//         {
-//             key: 'silverware',
-//             label: 'Silverware',
-//         },
-//         {
-//             key: 'cook_pots',
-//             label: 'Cook pots',
-//         },
-//         {
-//             key: 'frying_pans',
-//             label: 'Frying pans',
-//         },
-//         {
-//             key: 'baking_sheets',
-//             label: 'Baking sheets',
-//         },
-//         {
-//             key: 'cooking_utensils',
-//             label: 'Cooking utensils',
-//         },
-//         {
-//             key: 'specialty_utensils',
-//             label: 'Specialty utensils',
-//         },
-//         {
-//             key: 'measuring_cups',
-//             label: 'Measuring cups',
-//         },
-//         {
-//             key: 'hot_pads',
-//             label: 'Hot pads',
-//         },
-//         {
-//             key: 'dishwasher',
-//             label: 'Dishwasher',
-//         },
-//         {
-//             key: 'triple_sink',
-//             label: 'Triple Sink',
-//         },
-//         {
-//             key: 'dish_towels',
-//             label: 'Dish towels',
-//         },
-//         {
-//             key: 'hand_wash_station',
-//             label: 'Hand wash station',
-//         },
-//         {
-//             key: 'first_aid_kit',
-//             label: 'First aid kit',
-//         },
-//         {
-//             key: 'griddle',
-//             label: 'Griddle',
-//         },
-//         {
-//             key: 'barbeque',
-//             label: 'Barbeque',
-//         },
-//         {
-//             key: 'restroom',
-//             label: 'Restroom Available',
-//         },
-//     ]
-// };
+export const DYN_EMENTIES = {
+    tennis_court: [
+        {
+            key: 'fully_fenced',
+            label: 'Fully fenced',
+        },
+        {
+            key: 'net_included',
+            label: 'Net included',
+        },
+        {
+            key: 'marked_Lines',
+            label: 'Marked Lines',
+        },
+    ],
+    soccer_field: [
+        {
+            key: 'goals_with_nets',
+            label: 'Goals with nets',
+        },
+        {
+            key: 'marked_lines',
+            label: 'Marked lines',
+        },
+    ],
+    commercial_kitchens: [
+        {
+            key: 'refrigeration_capacity',
+            label: 'Refrigeration Capacity',
+        },
+        {
+            key: 'freezer_capacity',
+            label: 'Freezer capacity',
+        },
+        {
+            key: 'stove_tops',
+            label: 'Stove tops',
+        },
+        {
+            key: 'ovens',
+            label: 'Ovens',
+        },
+        {
+            key: 'plates',
+            label: 'Plates',
+        },
+        {
+            key: 'cups',
+            label: 'Cups',
+        },
+        {
+            key: 'silverware',
+            label: 'Silverware',
+        },
+        {
+            key: 'cook_pots',
+            label: 'Cook pots',
+        },
+        {
+            key: 'frying_pans',
+            label: 'Frying pans',
+        },
+        {
+            key: 'baking_sheets',
+            label: 'Baking sheets',
+        },
+        {
+            key: 'cooking_utensils',
+            label: 'Cooking utensils',
+        },
+        {
+            key: 'specialty_utensils',
+            label: 'Specialty utensils',
+        },
+        {
+            key: 'measuring_cups',
+            label: 'Measuring cups',
+        },
+        {
+            key: 'hot_pads',
+            label: 'Hot pads',
+        },
+        {
+            key: 'dishwasher',
+            label: 'Dishwasher',
+        },
+        {
+            key: 'triple_sink',
+            label: 'Triple Sink',
+        },
+        {
+            key: 'dish_towels',
+            label: 'Dish towels',
+        },
+        {
+            key: 'hand_wash_station',
+            label: 'Hand wash station',
+        },
+        {
+            key: 'first_aid_kit',
+            label: 'First aid kit',
+        },
+        {
+            key: 'griddle',
+            label: 'Griddle',
+        },
+        {
+            key: 'barbeque',
+            label: 'Barbeque',
+        },
+        {
+            key: 'restroom',
+            label: 'Restroom Available',
+        },
+    ]
+};
 
 export const LISTING_CONFIGS = {
 
@@ -223,8 +223,6 @@ export const LISTING_CONFIGS = {
     ]
   },
 
-
-
   agriculture_land: {
     unitType: LINE_ITEM_DAY,
     amenities: [
@@ -306,7 +304,6 @@ export const LISTING_CONFIGS = {
       },
     ]
   },
-
   conference_rooms_and_classrooms: {
     unitType: LINE_ITEM_UNITS,
     amenities: [
@@ -388,7 +385,6 @@ export const LISTING_CONFIGS = {
       },
     ]
   },
-
   commercial_kitchens: {
     unitType: LINE_ITEM_UNITS,
     amenities: [
@@ -636,21 +632,6 @@ export const LISTING_CONFIGS = {
       },
     ]
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // tennis_court: {
